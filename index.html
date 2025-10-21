@@ -26,6 +26,19 @@
     #download-docx:hover {
       background-color: #218838;
     }
+
+	#download-PDF{
+		padding: 10px 20px;
+	    background-color: blue;
+	    color: white;
+	    border: none;
+	    border-radius: 5px;
+	    cursor: pointer;
+	}
+	#download-PDF:hover {
+      background-color: lightblue;
+    }
+	  
 	.topButtons{
     display: flex;
     justify-content: space-between;
@@ -43,6 +56,8 @@
   <h2>Éditeur de Texte</h2>
   <div width="100%" class="topButtons">
 		<button id="download-docx">📄 Télécharger en DOCX</button>
+	  	<button id="download-PDF">📄 Télécharger en PDF</button>
+	  
     <a href="https://examen-francais-quebec.usito.usherbrooke.ca/" target="_blank">
       <div class="usitoDIV">
         Dictionnaire Usito lien<br>
@@ -69,6 +84,7 @@
 
   <!-- FileSaver.js -->
   <script src="https://cdn.jsdelivr.net/npm/file-saver@2.0.5/dist/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
     // Initialisation de l'éditeur Quill
@@ -93,10 +109,27 @@
       const converted = window.htmlDocx.asBlob(`<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>${html}</body></html>`);
       saveAs(converted, 'document.docx');
     });
+
+	  document.getElementById('download-docx').addEventListener('click', () => {
+      const html = quill.root.innerHTML;
+
+      // Options pour la génération du PDF
+      const options = {
+        margin:       10,
+        filename:     'mon_contenu.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      // Génération et téléchargement du PDF
+      html2pdf().set(options).from(element).save();
+    });
   </script>
 
 </body>
 
 </html>
+
 
 
