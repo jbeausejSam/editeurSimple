@@ -139,7 +139,7 @@
       html2pdf().set(options).from(element).save();
     });
 
-	  document.getElementById('view-PDF').addEventListener('click', () => {
+	  document.getElementById('view-PDF').addEventListener('click', async() => {
       const element = quill.root;
 
       // Options pour la génération du PDF
@@ -163,6 +163,7 @@
 </body>
 
 </html>
+
 
 
 
