@@ -38,6 +38,18 @@
 	#download-PDF:hover {
       background-color: lightblue;
     }
+
+	#view-PDF{
+		padding: 10px 20px;
+	    background-color: black;
+	    color: white;
+	    border: none;
+	    border-radius: 5px;
+	    cursor: pointer;
+	}
+	#download-PDF:hover {
+      background-color: gray;
+    }
 	  
 	.topButtons{
     display: flex;
@@ -57,6 +69,7 @@
   <div width="100%" class="topButtons">
 		<button id="download-docx">📄 Télécharger en DOCX</button>
 	  	<button id="download-PDF">📄 Télécharger en PDF</button>
+	  <button id="view-PDF">📄 Télécharger en PDF</button>
 	  
     <a href="https://examen-francais-quebec.usito.usherbrooke.ca/" target="_blank">
       <div class="usitoDIV">
@@ -125,11 +138,32 @@
       // Génération et téléchargement du PDF
       html2pdf().set(options).from(element).save();
     });
+
+	  document.getElementById('view-PDF').addEventListener('click', () => {
+      const element = quill.root;
+
+      // Options pour la génération du PDF
+      const options = {
+        margin:       10,
+        filename:     'mon_contenu.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+      };
+
+      // Génération et téléchargement du PDF
+      const worker = html2pdf().set(options).from(element);
+	const pdf = await worker.outputPdf('blob'); // récupère le PDF en blob
+      const url = URL.createObjectURL(pdf);
+      window.open(url, '_blank'); // ouvre dans un nouvel onglet
+		  
+    });
   </script>
 
 </body>
 
 </html>
+
 
 
 
