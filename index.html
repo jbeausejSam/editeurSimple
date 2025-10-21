@@ -111,7 +111,7 @@
     });
 
 	  document.getElementById('download-PDF').addEventListener('click', () => {
-      const html = quill.root.innerHTML;
+      const element = quill.root;
 
       // Options pour la génération du PDF
       const options = {
@@ -130,6 +130,7 @@
 </body>
 
 </html>
+
 
 
 
